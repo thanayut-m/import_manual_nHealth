@@ -1,6 +1,7 @@
 const express = require("express");
 const { checkFile } = require("./services/checkFile");
 const TimeHelper = require("./utils/TimeHelper");
+const { GeneratePubSub } = require("./services/GeneratePubSub");
 require("dotenv").config();
 
 const app = express();
@@ -17,11 +18,15 @@ const runCheckFile = async () => {
   const newss = TimeHelper.getss();
 
   console.log(
-    `[${newYear}:${newMonth}:${newDay}_${newHH}:${newmm}:${newss}] : Delay Time Out.`
+    `[${newYear}:${newMonth}:${newDay}_${newHH}:${newmm}:${newss}] : File check completed.`
   );
-  setTimeout(runCheckFile, 3000);
 };
 
-runCheckFile();
+const main = async () => {
+  await runCheckFile();
+  await GeneratePubSub();
+};
+
+main();
 
 app.listen(port, () => console.log(`Server is running on port: ${port}`));
