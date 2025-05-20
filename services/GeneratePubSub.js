@@ -1,48 +1,56 @@
 const { PubSub } = require("@google-cloud/pubsub");
-
+const TimeHelper = require("../utils/TimeHelper");
+const Logger = require("../utils/Logger");
+const logger = new Logger();
 require("dotenv").config();
 
 const subscriptionName = process.env.SUBPUB_SUBSCRIPTION_NAME;
 const keyFile = process.env.SUBPUB_KEY_FILE;
 const projectId = process.env.SUBPUB_PROJECT_ID;
 
-const GeneratePubSub = () => {
-  try {
-    if (!subscriptionName || !keyFile || !projectId) {
-      throw new Error("Missing environment variables for PubSub configuration");
-    }
+const pubsub = new PubSub({
+  projectId,
+  keyFilename: keyFile,
+});
 
-    const pubsub = new PubSub({
-      projectId,
-      keyFilename: keyFile,
-    });
-
-    const subscription = pubsub.subscription(subscriptionName);
-
-    let messageCount = 0;
-    let messages = [];
-
-    const messageHandler = (message) => {
-      messageCount++;
-      messages.push({
+async function GeneratePubSub() {
+  const subscription = pubsub.subscription(subscriptionName);
+  let messageCount = 0;
+  let data = [];
+  const messageHandler = async (message) => {
+    const result = JSON.parse(message.data);
+    try {
+      data.push({
         id: message.id,
-        data: message.data.toString(),
         attributes: message.attributes,
+        ...result,
       });
-
+      messageCount += 1;
       message.ack();
-    };
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  subscription.on("message", messageHandler);
+  setTimeout(() => {
+    console.log("Result Message Pulled: \n", data);
+    console.log(`${messageCount} message(s) received.`);
+    subscription.removeListener("message", messageHandler);
 
-    subscription.on("message", messageHandler);
+    const newYear = TimeHelper.getYear();
+    const newMonth = TimeHelper.getMonth();
+    const newDay = TimeHelper.getDay();
+    const newHH = TimeHelper.getHH();
+    const newmm = TimeHelper.getmm();
+    const newss = TimeHelper.getss();
 
-    setTimeout(() => {
-      console.log("Result Message Pulled: \n", messages);
-      console.log(`${messageCount} message(s) received.`);
-      subscription.removeListener("message", messageHandler);
-    }, 60 * 1000);
-  } catch (err) {
-    console.error(`Error LabResult : ${err.message}`);
-  }
-};
+    if (data.length > 0) {
+      const filename = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}.txt`;
+      logger.saveJSON(data, filename, "file");
+    } else {
+      console.log("No messages received. No file created.");
+    }
+  }, 3000);
+}
 
 module.exports = { GeneratePubSub };

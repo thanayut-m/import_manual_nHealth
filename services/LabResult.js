@@ -67,13 +67,10 @@ const labResult = async (jsonData) => {
     const newmm = TimeHelper.getmm();
     const newss = TimeHelper.getss();
 
-    logger.saveJSON(
-      jsonData,
-      `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
-        nextPageNo + 1
-      }_${jsonData.orderNumber}`,
-      "services/log/res"
-    );
+    const fileName = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
+      nextPageNo + 1
+    }_${jsonData.orderNumber}.Json`;
+    logger.saveJSON(jsonData, fileName, "services/log/res");
   } catch (err) {
     console.error(`Error LabResult : ${err.message}`);
   }

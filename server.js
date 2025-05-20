@@ -27,6 +27,11 @@ const main = async () => {
   await GeneratePubSub();
 };
 
-main();
+const runRepeatedly = async () => {
+  await main();
+  setTimeout(runRepeatedly, 3000);
+};
+
+runRepeatedly();
 
 app.listen(port, () => console.log(`Server is running on port: ${port}`));

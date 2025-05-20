@@ -24,7 +24,7 @@ class Logger {
       fs.mkdirSync(fullDirPath, { recursive: true });
     }
 
-    const safeFilename = `${filename}.json`;
+    const safeFilename = `${filename}`;
     const fullFilePath = path.join(fullDirPath, safeFilename);
 
     fs.writeFileSync(fullFilePath, JSON.stringify(data, null, 2), "utf8");
