@@ -1,6 +1,4 @@
-const Logger = require("../utils/Logger");
 const TimeHelper = require("../utils/TimeHelper");
-const logger = new Logger();
 const { query_db } = require("./func/ConnectDb");
 const moment = require("moment");
 const fileType = require("file-type");
@@ -60,17 +58,16 @@ const labResult = async (jsonData) => {
       console.error("Unsupported file type:", fileExt);
     }
 
-    const newYear = TimeHelper.getYear();
-    const newMonth = TimeHelper.getMonth();
-    const newDay = TimeHelper.getDay();
-    const newHH = TimeHelper.getHH();
-    const newmm = TimeHelper.getmm();
-    const newss = TimeHelper.getss();
+    // const newYear = TimeHelper.getYear();
+    // const newMonth = TimeHelper.getMonth();
+    // const newDay = TimeHelper.getDay();
+    // const newHH = TimeHelper.getHH();
+    // const newmm = TimeHelper.getmm();
+    // const newss = TimeHelper.getss();
 
-    const fileName = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
-      nextPageNo + 1
-    }_${jsonData.orderNumber}.Json`;
-    logger.saveJSON(jsonData, fileName, "services/log/res");
+    // const fileName = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
+    //   nextPageNo + 1
+    // }_${jsonData.orderNumber}.Json`;
   } catch (err) {
     console.error(`Error LabResult : ${err.message}`);
   }

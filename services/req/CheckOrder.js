@@ -20,8 +20,8 @@ const CheckOrder = async () => {
             await query_db(
               `UPDATE outlab_track
               SET flag = ?
-              WHERE lab_order_id = ?`,
-              ["Y", row.lab_order_id]
+              WHERE lab_order_id = ? AND outlab_company_id = ?`,
+              ["Y", row.lab_order_id, 3]
             );
           }
         } catch (error) {

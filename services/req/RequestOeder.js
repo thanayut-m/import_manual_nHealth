@@ -2,9 +2,6 @@ const { query_db } = require("../func/ConnectDb");
 const moment = require("moment");
 const { getToken } = require("../tokenService");
 const { default: axios } = require("axios");
-const TimeHelper = require("../../utils/TimeHelper");
-const Logger = require("../../utils/Logger");
-const logger = new Logger();
 
 const RequestOrder = async ({ row }) => {
   try {
@@ -24,6 +21,7 @@ const RequestOrder = async ({ row }) => {
       WHERE a.lab_order_id = ?
       AND a.outlab_send = 'Y'
       AND a.track_flag = 'N'
+      AND a.outlab_company_id = '3'
       GROUP BY a.lab_order_barcode_name`,
       [row]
     );
@@ -76,6 +74,7 @@ const RequestOrder = async ({ row }) => {
             FROM lab_order_outlab a
             WHERE a.lab_order_barcode_name = ?
             AND a.outlab_send = 'Y'
+            AND a.outlab_company_id = '3'
           `,
             [order.lab_order_barcode_name]
           );
@@ -165,25 +164,11 @@ const RequestOrder = async ({ row }) => {
               WHERE outlab_company_id = 3 AND lab_order_barcode_name = ?`,
               ["Y", "CREATE", order.lab_order_barcode_name]
             );
-
-            const newYear = TimeHelper.getYear();
-            const newMonth = TimeHelper.getMonth();
-            const newDay = TimeHelper.getDay();
-            const newHH = TimeHelper.getHH();
-            const newmm = TimeHelper.getmm();
-            const newss = TimeHelper.getss();
-
-            const filename = `${order.lab_order_barcode_name}_${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}.txt`;
-            logger.saveJSON(
-              data,
-              filename,
-              `./../log/req/${newYear}/${newMonth}/${newDay}`
-            );
           } else {
             await query_db(
               `UPDATE lab_order_outlab
               SET api_message = ?
-              WHERE lab_order_barcode_name = ?`,
+              WHERE lab_order_barcode_name = ? AND outlab_company_id = '3'`,
               [res.data.message, order.lab_order_barcode_name]
             );
           }
