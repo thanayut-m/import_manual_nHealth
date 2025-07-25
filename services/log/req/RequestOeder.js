@@ -4,6 +4,7 @@ const { getToken } = require("../../tokenService");
 const { default: axios } = require("axios");
 const TimeHelper = require("../../../utils/TimeHelper");
 const Logger = require("../../../utils/Logger");
+const logger = new Logger();
 
 const RequestOrder = async ({ row }) => {
   try {
@@ -165,15 +166,15 @@ const RequestOrder = async ({ row }) => {
               ["Y", "CREATE", order.lab_order_barcode_name]
             );
 
-            const newYear = TimeHelper.getYear();
-            const newMonth = TimeHelper.getMonth();
-            const newDay = TimeHelper.getDay();
-            const newHH = TimeHelper.getHH();
-            const newmm = TimeHelper.getmm();
-            const newss = TimeHelper.getss();
+            // const newYear = TimeHelper.getYear();
+            // const newMonth = TimeHelper.getMonth();
+            // const newDay = TimeHelper.getDay();
+            // const newHH = TimeHelper.getHH();
+            // const newmm = TimeHelper.getmm();
+            // const newss = TimeHelper.getss();
 
-            const filename = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}.txt`;
-            Logger.saveJSON(data, filename, "file");
+            // const filename = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}.txt`;
+            // // Logger.saveJSON(data, filename, "file");
           } else {
             await query_db(
               `UPDATE lab_order_outlab
