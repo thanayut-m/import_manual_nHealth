@@ -1,7 +1,7 @@
 const express = require("express");
 const { checkFile } = require("./services/checkFile");
 const TimeHelper = require("./utils/TimeHelper");
-const { GeneratePubSub } = require("./services/GeneratePubSub");
+const { CheckOrder } = require("./services/log/req/CheckOrder");
 require("dotenv").config();
 
 const app = express();
@@ -22,14 +22,33 @@ const runCheckFile = async () => {
   );
 };
 
+const delaySeconds = 10;
+
+const countdown = (seconds) => {
+  return new Promise((resolve) => {
+    let counter = seconds;
+
+    const interval = setInterval(() => {
+      console.log(`Delay: ${counter} second(s)...`);
+      counter--;
+
+      if (counter < 0) {
+        clearInterval(interval);
+        resolve();
+      }
+    }, 1000);
+  });
+};
+
 const main = async () => {
+  await CheckOrder();
   await runCheckFile();
-  await GeneratePubSub();
 };
 
 const runRepeatedly = async () => {
   await main();
-  setTimeout(runRepeatedly, 3000);
+  await countdown(delaySeconds);
+  runRepeatedly();
 };
 
 runRepeatedly();
