@@ -155,7 +155,7 @@ const RequestOrder = async ({ row }) => {
               "Content-Type": "application/json",
             },
           });
-          console.log(res);
+          console.log("result : ", res);
 
           if (res.data.success === true) {
             await query_db(
