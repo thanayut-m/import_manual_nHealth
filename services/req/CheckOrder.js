@@ -3,7 +3,6 @@ const { RequestOrder } = require("./RequestOeder");
 
 const CheckOrder = async () => {
   try {
-    // console.log("Hello CheckOrder...");
     const outlab_track = await query_db(
       `SELECT s.* FROM outlab_track s WHERE s.flag = "N" AND s.outlab_company_id = 3`
     );
@@ -21,7 +20,7 @@ const CheckOrder = async () => {
               `UPDATE outlab_track
               SET flag = ?
               WHERE lab_order_id = ? AND outlab_company_id = ?`,
-              ["Y", row.lab_order_id, 3]
+              ["Y", row.lab_order_id, "3"]
             );
           }
         } catch (error) {

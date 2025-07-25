@@ -2,6 +2,9 @@ const { query_db } = require("../func/ConnectDb");
 const moment = require("moment");
 const { getToken } = require("../tokenService");
 const { default: axios } = require("axios");
+const TimeHelper = require("../../utils/TimeHelper");
+const Logger = require("../../utils/Logger");
+const logger = new Logger();
 
 const RequestOrder = async ({ row }) => {
   try {
@@ -145,7 +148,6 @@ const RequestOrder = async ({ row }) => {
             labs: lab,
           };
           console.log("data:", JSON.stringify(data.customerLN, null, 2));
-
           await new Promise((resolve) => setTimeout(resolve, 3000));
 
           const res = await axios.post(process.env.PATH_REQUEST, data, {
@@ -155,7 +157,10 @@ const RequestOrder = async ({ row }) => {
               "Content-Type": "application/json",
             },
           });
-          console.log("result : ", res);
+          console.log(
+            `result Barcode ${order.lab_order_barcode_name} return : `,
+            res.data
+          );
 
           if (res.data.success === true) {
             await query_db(
@@ -164,6 +169,24 @@ const RequestOrder = async ({ row }) => {
               WHERE outlab_company_id = 3 AND lab_order_barcode_name = ?`,
               ["Y", "CREATE", order.lab_order_barcode_name]
             );
+
+            const newYear = TimeHelper.getYear();
+            const newMonth = TimeHelper.getMonth();
+            const newDay = TimeHelper.getDay();
+            const newHH = TimeHelper.getHH();
+            const newmm = TimeHelper.getmm();
+            const newss = TimeHelper.getss();
+
+            const fileName = `${order.lab_order_barcode_name}_${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}.txt`;
+
+            const folderPath = `services/logs/req/${newYear}/${newMonth}/${newDay}`;
+
+            try {
+              const savedPath = logger.saveJSON(data, fileName, folderPath);
+              console.log("File saved at:", savedPath);
+            } catch (error) {
+              console.error("Failed to save JSON:", error.message);
+            }
           } else {
             await query_db(
               `UPDATE lab_order_outlab
