@@ -1,7 +1,7 @@
 const express = require("express");
 const { checkFile } = require("./services/checkFile");
 const TimeHelper = require("./utils/TimeHelper");
-const { CheckOrder } = require("./services/log/req/CheckOrder");
+const { CheckOrder } = require("./services/req/CheckOrder");
 require("dotenv").config();
 
 const app = express();
