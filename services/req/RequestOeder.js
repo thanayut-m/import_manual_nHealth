@@ -147,8 +147,8 @@ const RequestOrder = async ({ row }) => {
             },
             labs: lab,
           };
-          console.log("data:", JSON.stringify(data.customerLN, null, 2));
-          await new Promise((resolve) => setTimeout(resolve, 3000));
+          console.log("Barcode :", JSON.stringify(data.customerLN, null, 2));
+          // await new Promise((resolve) => setTimeout(resolve, 3000));
 
           const res = await axios.post(process.env.PATH_REQUEST, data, {
             headers: {
@@ -166,8 +166,8 @@ const RequestOrder = async ({ row }) => {
             await query_db(
               `UPDATE lab_order_outlab
               SET track_flag = ?, api_get_result_check = ?
-              WHERE outlab_company_id = 3 AND lab_order_barcode_name = ?`,
-              ["Y", "CREATE", order.lab_order_barcode_name]
+              WHERE outlab_company_id = ? AND lab_order_barcode_name = ?`,
+              ["Y", "CREATE", "3", order.lab_order_barcode_name]
             );
 
             const newYear = TimeHelper.getYear();
@@ -182,8 +182,8 @@ const RequestOrder = async ({ row }) => {
             const folderPath = `services/logs/req/${newYear}/${newMonth}/${newDay}`;
 
             try {
-              const savedPath = logger.saveJSON(data, fileName, folderPath);
-              console.log("File saved at:", savedPath);
+              logger.saveJSON(data, fileName, folderPath);
+              // console.log("File saved at:", savedPath);
             } catch (error) {
               console.error("Failed to save JSON:", error.message);
             }
@@ -200,6 +200,8 @@ const RequestOrder = async ({ row }) => {
         }
       }
     }
+    console.log(`Waiting 5 seconds before next RequestOrder...`);
+    await new Promise((resolve) => setTimeout(resolve, 5000));
   } catch (err) {
     console.log("Error RequestOrder : ", err.message);
   }

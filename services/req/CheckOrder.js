@@ -10,28 +10,23 @@ const CheckOrder = async () => {
     if (outlab_track.length > 0) {
       for (const row of outlab_track) {
         try {
-          console.log(`New Order OutLab : ${row.lab_order_id}`);
-          await RequestOrder({
-            row: row.lab_order_id,
-          });
-
-          if (outlab_track.length > 0) {
-            await query_db(
-              `UPDATE outlab_track
-              SET flag = ?
-              WHERE lab_order_id = ? AND outlab_company_id = ?`,
-              ["Y", row.lab_order_id, "3"]
-            );
-          }
+          // console.log(`Start RequestOrder for: ${row.lab_order_id}`);
+          await RequestOrder({ row: row.lab_order_id });
+          // console.log(`Done RequestOrder for: ${row.lab_order_id}`);
+          await query_db(
+            `UPDATE outlab_track SET flag = ? WHERE lab_order_id = ? AND outlab_company_id = ? AND flag = 'N'`,
+            ["Y", row.lab_order_id, 3]
+          );
         } catch (error) {
-          console.log("outlab_track", error.message);
+          console.log("Error processing row:", row.lab_order_id, error.message);
         }
       }
     } else {
       console.log("No Request");
     }
   } catch (err) {
-    console.log("Error CheckOrder :", err.message);
+    console.log("Error CheckOrder:", err.message);
   }
 };
+
 module.exports = { CheckOrder };

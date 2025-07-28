@@ -22,14 +22,14 @@ const runCheckFile = async () => {
   );
 };
 
-const delaySeconds = 10;
+const delaySeconds = 9;
 
 const countdown = (seconds) => {
   return new Promise((resolve) => {
     let counter = seconds;
 
     const interval = setInterval(() => {
-      console.log(`Delay: ${counter} second(s)...`);
+      console.log(`V.68.07.28 : ${counter} second(s)...`);
       counter--;
 
       if (counter < 0) {

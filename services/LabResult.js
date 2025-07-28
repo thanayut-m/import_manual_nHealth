@@ -1,3 +1,5 @@
+const Logger = require("../utils/Logger");
+const logger = new Logger();
 const TimeHelper = require("../utils/TimeHelper");
 const { query_db } = require("./func/ConnectDb");
 const moment = require("moment");
@@ -8,7 +10,7 @@ const labResult = async (jsonData) => {
     if (!jsonData.labs?.[0]?.filebase64?.[0]?.filedata) {
       throw new Error("Missing file data in input JSON");
     }
-    let lab_order_id = jsonData.orderNumber.toString().slice(-6);
+    let lab_order_id = jsonData.orderNumber.toString().slice(2);
     const buffer = Buffer.from(
       jsonData.labs[0].filebase64[0].filedata,
       "base64"
@@ -40,7 +42,11 @@ const labResult = async (jsonData) => {
       ) VALUES (?,?,?,?,?)`,
         [maxid + 1, buffer, lab_order_id, dateTime, nextPageNo + 1]
       );
-      console.log("Insert Type PDF success : ", jsonData);
+
+      console.log(
+        "Insert Type PDF success : ",
+        JSON.stringify(jsonData, null, 2)
+      );
     } else if (fileExt === "jpg") {
       console.log("File type JPG.");
       await query_db(
@@ -53,21 +59,29 @@ const labResult = async (jsonData) => {
       )VALUES (?,?,?,?,?)`,
         [maxid + 1, nextPageNo + 1, buffer, lab_order_id, dateTime]
       );
-      console.log("Insert Type JPG success : ", jsonData);
+      console.log(
+        "Insert Type JPG success : ",
+        JSON.stringify(jsonData, null, 2)
+      );
     } else {
       console.error("Unsupported file type:", fileExt);
     }
 
-    // const newYear = TimeHelper.getYear();
-    // const newMonth = TimeHelper.getMonth();
-    // const newDay = TimeHelper.getDay();
-    // const newHH = TimeHelper.getHH();
-    // const newmm = TimeHelper.getmm();
-    // const newss = TimeHelper.getss();
+    const newYear = TimeHelper.getYear();
+    const newMonth = TimeHelper.getMonth();
+    const newDay = TimeHelper.getDay();
+    const newHH = TimeHelper.getHH();
+    const newmm = TimeHelper.getmm();
+    const newss = TimeHelper.getss();
 
-    // const fileName = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
-    //   nextPageNo + 1
-    // }_${jsonData.orderNumber}.Json`;
+    const fileName = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
+      nextPageNo + 1
+    }_${jsonData.orderNumber}.txt`;
+    logger.saveJSON(
+      jsonData,
+      fileName,
+      `services/logs/res/${newYear}/${newMonth}/${newDay}`
+    );
   } catch (err) {
     console.error(`Error LabResult : ${err.message}`);
   }
