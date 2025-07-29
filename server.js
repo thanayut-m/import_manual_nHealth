@@ -2,6 +2,7 @@ const express = require("express");
 const { checkFile } = require("./services/checkFile");
 const TimeHelper = require("./utils/TimeHelper");
 const { CheckOrder } = require("./services/req/CheckOrder");
+const { GeneratePubSub } = require("./services/GeneratePubSub");
 require("dotenv").config();
 
 const app = express();
@@ -42,6 +43,7 @@ const countdown = (seconds) => {
 
 const main = async () => {
   await CheckOrder();
+  await GeneratePubSub();
   await runCheckFile();
 };
 

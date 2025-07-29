@@ -19,8 +19,6 @@ async function GeneratePubSub() {
   let data = [];
   const messageHandler = async (message) => {
     const result = JSON.parse(message.data);
-    // const filePubSub = `PubSub.txt`;
-    // logger.saveJSON(message.data, filePubSub, "file");
     try {
       data.push({
         id: message.id,
