@@ -200,8 +200,8 @@ const RequestOrder = async ({ row }) => {
         }
       }
     }
-    console.log(`Waiting 5 seconds before next RequestOrder...`);
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+    console.log(`Waiting 3 seconds before next RequestOrder...`);
+    await new Promise((resolve) => setTimeout(resolve, 3000));
   } catch (err) {
     console.log("Error RequestOrder : ", err.message);
   }
