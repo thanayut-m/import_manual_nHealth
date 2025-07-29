@@ -47,6 +47,13 @@ const labResult = async (jsonData) => {
         "Insert Type PDF success : ",
         JSON.stringify(jsonData, null, 2)
       );
+
+      await query_db(
+        `UPDATE lab_order_outlab
+        SET api_get_result_check = ?,api_get_result_datetime =?
+        WHERE lab_order_id = ?`,
+        ["SUCCESS", moment().format("YYYY-MM-DD HH:mm:ss"), lab_order_id]
+      );
     } else if (fileExt === "jpg") {
       console.log("File type JPG.");
       await query_db(
@@ -62,6 +69,13 @@ const labResult = async (jsonData) => {
       console.log(
         "Insert Type JPG success : ",
         JSON.stringify(jsonData, null, 2)
+      );
+
+      await query_db(
+        `UPDATE lab_order_outlab
+        SET api_get_result_check = ?,api_get_result_datetime =?
+        WHERE lab_order_id = ?`,
+        ["SUCCESS", moment().format("YYYY-MM-DD HH:mm:ss"), lab_order_id]
       );
     } else {
       console.error("Unsupported file type:", fileExt);
