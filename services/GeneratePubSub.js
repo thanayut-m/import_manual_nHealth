@@ -45,7 +45,7 @@ async function GeneratePubSub() {
     const newss = TimeHelper.getss();
 
     if (data.length > 0) {
-      const filename = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${data.orderNumber}.txt`;
+      const filename = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${data[0].orderNumber}.txt`;
       logger.saveJSON(data, filename, "file");
     } else {
       console.log("No messages received. No file created.");

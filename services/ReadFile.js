@@ -17,8 +17,9 @@ const readFile = async (fileNames) => {
         console.log(`Processing file: ${fileName}`);
         const text = await fs.readFile(filePath, "utf-8");
         const jsonData = JSON.parse(text);
-        await labResult(jsonData);
-
+        for (const rows of jsonData) {
+          await labResult(rows);
+        }
         const backupFolder = path.join(__dirname, "../file/Backup");
         const newPath = path.join(backupFolder, fileName);
 
