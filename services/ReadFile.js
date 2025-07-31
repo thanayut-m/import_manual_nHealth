@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs").promises;
 const { labResult } = require("./LabResult");
 const FileMover = require("../utils/FileMover");
+const TimeHelper = require("../utils/TimeHelper");
 
 const readFile = async (fileNames) => {
   try {
@@ -12,7 +13,9 @@ const readFile = async (fileNames) => {
       if (!stat.isFile()) {
         continue;
       }
-
+      const newYear = TimeHelper.getYear();
+      const newMonth = TimeHelper.getMonth();
+      const newDay = TimeHelper.getDay();
       try {
         console.log(`Processing file: ${fileName}`);
         const text = await fs.readFile(filePath, "utf-8");
@@ -20,7 +23,10 @@ const readFile = async (fileNames) => {
         for (const rows of jsonData) {
           await labResult(rows);
         }
-        const backupFolder = path.join(__dirname, "../file/Backup");
+        const backupFolder = path.join(
+          __dirname,
+          `../file/Backup/${newYear}/${newMonth}/${newDay}`
+        );
         const newPath = path.join(backupFolder, fileName);
 
         await fs.mkdir(backupFolder, { recursive: true });
