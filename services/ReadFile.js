@@ -25,7 +25,7 @@ const readFile = async (fileNames) => {
         }
         const backupFolder = path.join(
           __dirname,
-          `../file/Backup/${newYear}/${newMonth}/${newDay}`
+          `../file/Backup/${newYear}_${newMonth}`
         );
         const newPath = path.join(backupFolder, fileName);
 

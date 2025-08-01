@@ -165,7 +165,7 @@ const RequestOrder = async ({ row }) => {
           console.log("Barcode :", JSON.stringify(data.customerLN, null, 2));
           // await new Promise((resolve) => setTimeout(resolve, 3000));
 
-          const res = await axios.post(process.env.PATH_REQUEST, data, {
+          const res = await axios.post(process.env.LAB_ORDER_REQUEST, data, {
             headers: {
               serverKey: token.serverKey,
               Authorization: `${token.token_type} ${token.access_token}`,
@@ -194,11 +194,10 @@ const RequestOrder = async ({ row }) => {
 
             const fileName = `${order.lab_order_barcode_name}_${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}.txt`;
 
-            const folderPath = `services/logs/req/${newYear}/${newMonth}/${newDay}`;
+            const folderPath = `LOG/REQ/${newYear}_${newMonth}`;
 
             try {
               logger.saveJSON(data, fileName, folderPath);
-              // console.log("File saved at:", savedPath);
             } catch (error) {
               console.error("Failed to save JSON:", error.message);
             }

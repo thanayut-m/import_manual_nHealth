@@ -1,5 +1,5 @@
 const { query_db } = require("../func/ConnectDb");
-const { RequestOrder } = require("./RequestOeder");
+const { RequestOrder } = require("./RequestOrder");
 
 const CheckOrder = async () => {
   try {

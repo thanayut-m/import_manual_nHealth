@@ -14,7 +14,7 @@ async function generateAccessToken() {
 
     const config = {
       method: "post",
-      url: process.env.OAUTH_SERVICE_URL,
+      url: process.env.ACCESS_TOKEN_URL,
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
       },
@@ -39,7 +39,7 @@ async function generateServerKey(token_type, access_token, session_state) {
 
     const config = {
       method: "post",
-      url: process.env.PATH_SELECT,
+      url: process.env.GET_SERVER_URL,
       headers: {
         Authorization: `${token_type} ${access_token}`,
         "Content-Type": "application/json",

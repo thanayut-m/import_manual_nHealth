@@ -95,7 +95,7 @@ const labResult = async (jsonData) => {
       logger.saveJSON(
         jsonData,
         fileName,
-        `services/logs/res/${newYear}/${newMonth}/${newDay}`
+        `LOG/RES/${newYear}/${newMonth}/${newDay}`
       );
     } else if (fileExt === "jpg") {
       console.log("File type JPG.");
@@ -125,11 +125,7 @@ const labResult = async (jsonData) => {
       const fileName = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
         nextPageImageNo + 1
       }_${jsonData.orderNumber}.txt`;
-      logger.saveJSON(
-        jsonData,
-        fileName,
-        `services/logs/res/${newYear}/${newMonth}/${newDay}`
-      );
+      logger.saveJSON(jsonData, fileName, `LOG/RES/${newYear}_${newMonth}`);
     } else {
       console.error("Unsupported file type:", fileExt);
     }
