@@ -43,7 +43,7 @@ const countdown = (seconds) => {
 
 const main = async () => {
   await CheckOrder();
-  await GeneratePubSub();
+  // await GeneratePubSub();
   await runCheckFile();
 };
 

@@ -11,9 +11,19 @@ const labResult = async (jsonData) => {
       throw new Error("Missing file data in input JSON");
     }
 
-    let orderStr = jsonData.orderNumber.toString();
-    const lab_order_id =
-      orderStr[2] !== "0" ? orderStr.slice(3) : orderStr.slice(2);
+    let barcode = jsonData.orderNumber.toString();
+
+    const barcode_query = await query_db(
+      `SELECT 
+        a.lab_order_id 
+        FROM lab_order_outlab a 
+        LEFT JOIN lab_order_barcode b ON b.lab_order_id = a.lab_order_id 
+        WHERE a.lab_order_barcode_name = ? OR b.instruments_order_number = ?`,
+      [barcode, barcode]
+    );
+
+    const lab_order_id = barcode_query[0].lab_order_id;
+    console.log("lab_order_id", lab_order_id);
 
     const buffer = Buffer.from(
       jsonData.labs[0].filebase64[0].filedata,

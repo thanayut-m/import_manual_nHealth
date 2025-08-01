@@ -5,6 +5,9 @@ const { default: axios } = require("axios");
 const TimeHelper = require("../../utils/TimeHelper");
 const Logger = require("../../utils/Logger");
 const logger = new Logger();
+require("dotenv").config();
+
+const barcode = process.env.BARCODENAME;
 
 const RequestOrder = async ({ row }) => {
   try {
@@ -17,15 +20,17 @@ const RequestOrder = async ({ row }) => {
         b.lab_order_priority_id,
         b.lab_order_staff_id,
         c.ward_name,
-        b.patient_id
-      FROM lab_order_outlab a
-      INNER JOIN lab_order b ON a.lab_order_id = b.lab_order_id
-      LEFT JOIN ward c ON b.ward_id = c.ward_id
-      WHERE a.lab_order_id = ?
-      AND a.outlab_send = 'Y'
-      AND a.track_flag = 'N'
-      AND a.outlab_company_id = '3'
-      GROUP BY a.lab_order_barcode_name`,
+        b.patient_id,
+        d.instruments_order_number
+        FROM lab_order_outlab a
+        INNER JOIN lab_order b ON a.lab_order_id = b.lab_order_id
+        LEFT JOIN lab_order_barcode d ON d.lab_order_id=a.lab_order_id 
+        LEFT JOIN ward c ON b.ward_id = c.ward_id
+        WHERE a.lab_order_id = ?
+        AND a.outlab_send = 'Y'
+        AND a.track_flag = 'N'
+        AND a.outlab_company_id = '3'
+        GROUP BY a.lab_order_barcode_name`,
       [row]
     );
 
@@ -89,8 +94,18 @@ const RequestOrder = async ({ row }) => {
               : "NORMAL";
 
           let data = {
-            customerLN: order.lab_order_barcode_name,
-            barcode: order.lab_order_barcode_name,
+            customerLN:
+              barcode === "instruments_order_number"
+                ? order.instruments_order_number
+                : barcode === "lab_order_barcode_name"
+                ? order.lab_order_barcode_name
+                : null,
+            barcode:
+              barcode === "instruments_order_number"
+                ? order.instruments_order_number
+                : barcode === "lab_order_barcode_name"
+                ? order.lab_order_barcode_name
+                : null,
             priority: priority,
             orderRemark: null,
             orderDate: order.order_date
