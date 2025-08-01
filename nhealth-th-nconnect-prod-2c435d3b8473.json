@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "nhealth-th-nconnect-prod",
+  "private_key_id": "2c435d3b8473322770a056ed89702dc1b81a3746",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0ppa46LKZYhSA\n6ZTQHLWoTkb62xaOd4vr9vZVe4ceX7kdXeYfDuvwA4YR7IhhyGOOvku0tTY0wV+U\nkwGnBYNWP7VWn7dEmMATJ4iUbMHKs3TSdxugLW7/si8JodrmfNINAXfJJhR95IUU\nP3/3K0nQtiR8NseaJ9FJ2QzkPRFF+0Mqzb16LboXYessCd1lh7YmC9LXc++yZMyu\nAaeF9FwS1ZB6i9n2YDWay0p+xCfKNfQ4puUwxwQXU0yir5/w3tqF0vVq1vVdEFyB\nvRXsZoKhiGvTK/RXdY7OfTE+hhTaKuZer2GG+5MGFv3NsZZenEvALAdwiF85FUhu\nQ32SlR49AgMBAAECggEAFSNxJjiZvXehQpG9Mg+fSg8ZddJxH0E/LuClDneikJv5\ng0WGNJgrD4NktXA3Z98U7JJj4BoG5RbDjRUZRRFQvvo8Ho4YhH8DQA/eMXqlv9xO\njS9sHMrJiZiwsbCDds5K80P6tPTZwlQdJl4P0Tz61DXxVapAok81HtkLuHaqMMVK\niQnld1kx6XY2RKJnumm52/JDJrkICUNhNtFWfDA6H7nHrk+CrXSo9fqOZCtm+izU\n7Y9Y0zpbPS15I9ug1JZhv5TgqO3ROLWRVyLdOZAaRwi7ujVrxAhMIOMa3o7SRAbj\nRkr0DxjJ0i/K1MHgy/2vp/PBCv1+xYRPOxFV8LTL2QKBgQD1rqWadW85w2s4OxDX\nGMiazDlWOas7VV94K4MaNdZ3ipb9IR36AHVRzj7bQCWrlonCfejXP+zYfIe1pAe3\n6MmTQ4ZBGHgAW5US5uxcns6D6jIojOS3UicXtFslQu094xlj1ZClg2HfbGimq/Aa\nGZ4vkfIDb7mmI7Hsa09LnOThQwKBgQC8PMg+wFUPKUvsMpSZAAd+VH/Lekf0txWV\nJ3PkkZFApcIC9JijarZD1J77oKjXCfNlWR9c7VdLgwDKg+pywy97ze3jxqjzOuVD\ntLag/H8Yzj+Jhko+X9DUfUKomlpMOJIwk0hzcEnAw9hS7feDavGR7APnEaisviJq\nnAFb16RKfwKBgQCI+7jQN1wty9zzfFN2axYm4WmyvvLPYVmaykAOFCihfH+VYaqy\nIyFG3IVFgC3Az22+KK/znGv1hPGyAGRhUYVa+9JWZ0s5f9bNtD3jopQpDyKqY2x/\nHmo3mFMdooRe9knI1WISNwASMALls4ZrNw9xHKHg8qGDlfF1jZun4DHpuwKBgGSg\n7b+2HAK15fOH+q5sOJVNYOALJ8pn0a7h32+ybf8sXbIsxiieVH+ge7ky4u/KTwbA\nBSctbjxc9SBOMxhUxd6ecO0Sd6FHu+ZdBkC7mspM/+RqGOiNWlst92Og2GLk3yn+\non2r6pGVYOC8fFQR6MBEdrWhWBW4szdg3M0XU6nLAoGAaHyF0RgatBfJzGDtT7v+\n9LW4FzP6i+wc06COwGJsIOCTDaMc0vd80vWzQF6Dwv9EyGRUFZMqitE0BCnHXgat\nuEXe+63XLnDzZc28hqR69lIyQRgaz6AvwOnsyc8s5oWTlG1Gvmg3EpwjquK0nBnH\nAQ9yjOLDDP8l4ZpqLdBzaRo=\n-----END PRIVATE KEY-----\n",
+  "client_email": "nconnect-sub-loginlab@nhealth-th-nconnect-prod.iam.gserviceaccount.com",
+  "client_id": "109483548275940014119",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nconnect-sub-loginlab%40nhealth-th-nconnect-prod.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

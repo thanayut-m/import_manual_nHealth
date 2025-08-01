@@ -10,7 +10,11 @@ const labResult = async (jsonData) => {
     if (!jsonData.labs?.[0]?.filebase64?.[0]?.filedata) {
       throw new Error("Missing file data in input JSON");
     }
-    let lab_order_id = jsonData.orderNumber.toString().slice(2);
+
+    let orderStr = jsonData.orderNumber.toString();
+    const lab_order_id =
+      orderStr[2] !== "0" ? orderStr.slice(3) : orderStr.slice(2);
+
     const buffer = Buffer.from(
       jsonData.labs[0].filebase64[0].filedata,
       "base64"
