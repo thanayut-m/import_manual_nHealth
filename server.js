@@ -30,7 +30,7 @@ const countdown = (seconds) => {
     let counter = seconds;
 
     const interval = setInterval(() => {
-      console.log(`V.68.07.29 : ${counter} second(s)...`);
+      console.log(`V.68.08.01 : ${counter} second(s)...`);
       counter--;
 
       if (counter < 0) {
