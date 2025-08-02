@@ -92,11 +92,7 @@ const labResult = async (jsonData) => {
       const fileName = `${newYear}${newMonth}${newDay}${newHH}${newmm}${newss}_${
         nextPagePdfNo + 1
       }_${jsonData.orderNumber}.txt`;
-      logger.saveJSON(
-        jsonData,
-        fileName,
-        `LOG/RES/${newYear}/${newMonth}/${newDay}`
-      );
+      logger.saveJSON(jsonData, fileName, `LOG/RES/${newYear}_${newMonth}`);
     } else if (fileExt === "jpg") {
       console.log("File type JPG.");
       const result = await query_db(
